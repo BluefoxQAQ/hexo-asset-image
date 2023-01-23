@@ -9,7 +9,14 @@ function getPosition(str, m, i) {
 hexo.extend.filter.register('after_post_render', function(data){
   var config = hexo.config;
   if(config.post_asset_folder){
-    var link = data.permalink;
+    // 去掉后缀 .html
+    var link_test = data.permalink;
+    if(link_test.lastIndexOf(".html") > -1){ // 判断 .html 是否存在
+      var link = link_test.replace(".html","/") // 存在，就用 / 替换掉
+    }else{
+      var link = link_test;
+    }
+    // console.info(link_test+"uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu") // 打印输出是否正确
     var beginPos = getPosition(link, '/', 3) + 1;
     var appendLink = '';
     // In hexo 3.1.1, the permalink of "about" page is like ".../about/index.html".
